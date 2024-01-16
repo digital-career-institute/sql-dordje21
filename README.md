@@ -11,3 +11,30 @@ animals column1 animal_id datatype INT PRIMARY KEY
 practice group by, and sub queries , provide a list of habitata with their IDs, names, and the total number of animals in each habitat
 
     
+-- Create the 'animals' table
+CREATE TABLE animals (
+    animal_id INT PRIMARY KEY,
+    animal_name VARCHAR(50),
+    species VARCHAR(50),
+    habitat_id INT,
+    FOREIGN KEY (habitat_id) REFERENCES habitats(habitat_id)
+);
+
+-- Create the 'habitats' table
+CREATE TABLE habitats (
+    habitat_id INT PRIMARY KEY,
+    habitat_name VARCHAR(50),
+    climate VARCHAR(50)
+);
+
+SELECT 
+    H.habitat_id,
+    H.habitat_name,
+    H.climate,
+    COALESCE(COUNT(A.animal_id), 0) AS total_animals
+FROM 
+    habitats H
+LEFT JOIN 
+    animals A ON H.habitat_id = A.habitat_id
+GROUP BY 
+    H.habitat_id, H.habitat_name, H.climate;
