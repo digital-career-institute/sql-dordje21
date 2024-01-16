@@ -52,7 +52,6 @@ FROM
     habitats H
 LEFT JOIN 
     animals A ON H.habitat_id = A.habitat_id
-
-```
 GROUP BY 
     H.habitat_id, H.habitat_name, H.climate;
+```
